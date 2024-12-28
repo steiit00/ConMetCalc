@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConMetCalc - Startseite</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>ConMetCalc</h1>
+        <nav>
+            <a href="/">Startseite</a>
+            <a href="/kalkulation">Jetzt kalkulieren</a>
+            <a href="/impressum">Impressum</a>
+            <a href="/kontakt">Kontakt</a>
+        </nav>
+    </header>
+    <div class="hero">
+        <h1>Effiziente Kalkulationslösung</h1>
+    </div>
+    <main>
+        <section>
+            <h2>Die Kalkulationslösung für Schlossereien und Metallbetriebe</h2>
+            <p>ConMetCalc hilft dir, Projekte effizient zu kalkulieren und Materialkosten zu optimieren.</p>
+        </section>
+        <div class="swipe-container" id="swipeContainer">
+            <div class="swipe-item">Effiziente Materialkalkulation
+                <div class="details">
+                    <p>Vorteile:</p>
+                    <ul>
+                        <li>Sortierbar mit Suchfunktion für verschiedene Materialarten</li>
+                        <li>Eigene Kalkulation für Rohre/Profile (nach KG)</li>
+                        <li>Blechkalkulation (nach m²)</li>
+                        <li>Normteile (nach Stückzahl oder KG)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="swipe-item">Mitarbeiter
+                <div class="details">
+                    <p>Vorteile:</p>
+                    <ul>
+                        <li>Verschiedene Rollen mit unterschiedlichen Stundensätzen</li>
+                        <li>Alle Stundensätze selbst konfigurierbar</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="swipe-item">Maschinenkosten
+                <div class="details">
+                    <p>Vorteile:</p>
+                    <ul>
+                        <li>Konfigurierbare Stundensätze oder Festpreise</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="swipe-item">Auftragserstellung</div>
+            <div class="swipe-item">Rechnungserstellung</div>
+        </div>
+        <div class="indicator-container" id="indicatorContainer"></div>        
+        <button class="action-button" onclick="window.location.href='/kalkulation'">Jetzt kalkulieren!</button>
+    </main>
+    <footer>
+        &copy; 2024 ConMetCalc - Alle Rechte vorbehalten
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html>
