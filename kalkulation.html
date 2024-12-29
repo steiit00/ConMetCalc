@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nutzen Sie unsere einfache Kalkulationsseite, um Materialkosten für Schlossereien und Metallbetriebe in wenigen Sekunden zu berechnen.">
+    <meta name="keywords" content="Materialkalkulation, Schlosserei, Metallbetriebe, ConMetCalc">
+    <meta name="author" content="Stefan Eisele">
+    <title>Materialkalkulation für Schlossereien | ConMetCalc</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        .form-input {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0.5rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+        }
+        .btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #1d4ed8;
+            box-shadow: 0 5px 15px rgba(29, 78, 216, 0.3);
+        }
+        .checkbox-label {
+            margin-left: 8px;
+            color: #6b7280;
+        }
+        .result {
+            font-weight: bold;
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-500 text-white py-4">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="/" class="text-lg font-bold">ConMetCalc</a>
+            <div class="space-x-4">
+                <a href="/" class="hover:underline">Startseite</a>
+                <a href="/kontakt.html" class="hover:underline">Kontakt</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-gray-100 py-12">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-500">Materialkalkulation</h1>
+            <p class="mt-4 text-lg sm:text-xl text-gray-700">Berechnen Sie Ihre Materialkosten in wenigen Sekunden!</p>
+        </div>
+    </header>
+
+    <!-- Kalkulationsformular -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 max-w-2xl">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center mb-8 text-gray-800">Angebot erstellen</h2>
+            <form id="calculation-form">
+                <input type="text" id="offer-title" class="form-input" placeholder="Angebotstitel (z. B. Angebot für Dachreparatur)" />
+                <!-- Kundendaten -->
+                <div>
+                    <input type="text" id="customer-name" class="form-input" placeholder="Kundenname" />
+                    <input type="text" id="company-name" class="form-input" placeholder="Firmenname" />
+                </div>
+
+                <!-- Materialeingabe -->
+                <div id="material-fields">
+                    <!-- Dynamische Material-Felder -->
+                </div>
+                <button type="button" id="add-material-btn" class="btn w-full">Material hinzufügen</button>
+                <p class="mt-2 text-sm text-gray-600">Maximal 5 Materialien.</p>
+
+                <!-- Zuschläge und Mehrwertsteuer -->
+                <div class="mt-4">
+                    <label>
+                        <input type="checkbox" id="surcharge" />
+                        <span class="checkbox-label">Zuschläge / Verschnitt (10%)</span>
+                    </label>
+                </div>
+                <div class="mt-2">
+                    <label>
+                        <input type="checkbox" id="vat" />
+                        <span class="checkbox-label">Mehrwertsteuer (19%)</span>
+                    </label>
+                </div>
+
+                <!-- Ergebnisse -->
+                <div id="results" class="result mt-4"></div>
+
+                <!-- Buttons -->
+                <div class="flex justify-between mt-8">
+                    <button type="button" id="generate-pdf-btn" class="btn">PDF generieren</button>
+                    <a href="/kontakt.html" class="btn">Zur Kontaktseite</a>
+                </div>                
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-500 text-white py-4">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p>&copy; 2024 ConMetCalc. Alle Rechte vorbehalten. Kontakt: <a href="mailto:info@conmetcalc.de" class="underline">info@conmetcalc.de</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const maxMaterials = 5;
+        const materialFields = document.getElementById('material-fields');
+        const addMaterialBtn = document.getElementById('add-material-btn');
+        const surchargeCheckbox = document.getElementById('surcharge');
+        const vatCheckbox = document.getElementById('vat');
+        const resultsDiv = document.getElementById('results');
+
+        let materialCount = 0;
+
+        // Warnung anzeigen, wenn die Seite verlassen wird
+        window.addEventListener('beforeunload', (event) => {
+            event.preventDefault();
+            event.returnValue = ''; // Standard-Wert für moderne Browser
+        });
+
+
+        // Funktion, um Materialfelder hinzuzufügen
+        addMaterialBtn.addEventListener('click', () => {
+            if (materialCount < maxMaterials) {
+                materialCount++;
+                const materialDiv = document.createElement('div');
+                materialDiv.innerHTML = `
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <input type="text" class="form-input material-name" placeholder="Materialname" />
+                        <input type="number" class="form-input material-amount" placeholder="Menge" />
+                        <input type="number" class="form-input material-price" placeholder="Preis pro Einheit" />
+                    </div>`;
+                materialFields.appendChild(materialDiv);
+
+                // Event-Listener direkt für die neuen Felder hinzufügen
+                materialDiv.querySelectorAll('.form-input').forEach(input => {
+                    input.addEventListener('input', updateTotalCost);
+                });
+
+                // Initiale Berechnung durchführen
+                updateTotalCost();
+            } else {
+                alert('Maximal 5 Materialien erlaubt.');
+            }
+        });
+
+        // Funktion, um Gesamtkosten zu berechnen und anzuzeigen
+        function updateTotalCost() {
+            const amounts = document.querySelectorAll('.material-amount');
+            const prices = document.querySelectorAll('.material-price');
+
+            let totalWithoutVAT = 0;
+
+            // Berechnung der Zwischensumme
+            amounts.forEach((amountInput, index) => {
+                const amount = parseFloat(amountInput.value) || 0;
+                const price = parseFloat(prices[index]?.value) || 0;
+                totalWithoutVAT += amount * price;
+            });
+
+            // Berechnung von Zuschlägen (10%)
+            let surchargeAmount = 0;
+            if (surchargeCheckbox.checked) {
+                surchargeAmount = totalWithoutVAT * 0.1;
+            }
+
+            // Berechnung der Mehrwertsteuer (19%)
+            let vatAmount = 0;
+            let totalWithVAT = totalWithoutVAT + surchargeAmount;
+            if (vatCheckbox.checked) {
+                vatAmount = totalWithVAT * 0.19;
+                totalWithVAT += vatAmount;
+            }
+
+            // Ergebnisse anzeigen
+            resultsDiv.innerHTML = `
+                <p>Zwischensumme (ohne MwSt.): ${totalWithoutVAT.toFixed(2)} €</p>
+                ${surchargeCheckbox.checked ? `<p>Zuschläge (10%): ${surchargeAmount.toFixed(2)} €</p>` : ''}
+                ${vatCheckbox.checked ? `<p>Mehrwertsteuer (19%): ${vatAmount.toFixed(2)} €</p>` : ''}
+                <p>Gesamtkosten (inkl. MwSt.): ${totalWithVAT.toFixed(2)} €</p>
+            `;
+        }
+
+        // Event-Listener für Änderungen in den Checkboxen
+        surchargeCheckbox.addEventListener('change', updateTotalCost);
+        vatCheckbox.addEventListener('change', updateTotalCost);
+
+        // Event-Listener für bestehende Eingabefelder
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', updateTotalCost);
+        });
+
+        document.getElementById('generate-pdf-btn').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Titel und Kundendaten
+        const offerTitle = document.getElementById('offer-title').value.trim();
+        const customerName = document.getElementById('customer-name').value.trim();
+        const companyName = document.getElementById('company-name').value.trim();
+        const creationDate = new Date().toLocaleDateString('de-DE');
+
+        // PDF Header
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.text(offerTitle || 'Angebot', 105, 20, { align: 'center' });
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(12);
+        doc.text(`Firma: ${companyName || 'N/A'}`, 10, 40);
+        doc.text(`Kunde: ${customerName || 'N/A'}`, 10, 45);
+        doc.text(`Datum: ${creationDate}`, 10, 50);
+        doc.text('Angebotsnummer: 760022', 150, 40);
+        doc.text('Kundennummer: 004354', 150, 45);
+
+        // Tabelle Kopfzeile
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.text('Pos.', 10, 70);
+        doc.text('Bezeichnung', 20, 70);
+        doc.text('Menge', 120, 70, { align: 'right' });
+        doc.text('E-Preis (€)', 140, 70, { align: 'right' });
+        doc.text('G-Preis (€)', 170, 70, { align: 'right' });
+        doc.line(10, 72, 200, 72); // Trennlinie
+
+        let y = 80;
+        let totalWithoutVAT = 0;
+
+        // Tabelleninhalte
+        materialFields.querySelectorAll('.grid').forEach((row, index) => {
+            if (index < 5) { // Maximal 5 Positionen
+                const inputs = row.querySelectorAll('.form-input');
+                const name = inputs[0].value.trim();
+                const amount = parseFloat(inputs[1].value) || 0;
+                const price = parseFloat(inputs[2].value) || 0;
+                const cost = amount * price;
+
+                totalWithoutVAT += cost;
+
+                doc.setFont('helvetica', 'normal');
+                doc.text((index + 1).toString(), 10, y);
+                doc.text(name || 'N/A', 20, y);
+                doc.text(amount.toString(), 120, y, { align: 'right' });
+                doc.text(price.toFixed(2), 140, y, { align: 'right' });
+                doc.text(cost.toFixed(2), 170, y, { align: 'right' });
+                y += 10;
+            }
+        });
+
+        // Zwischensumme ohne MwSt.
+        doc.setFont('helvetica', 'bold');
+        doc.line(10, y, 200, y); // Trennlinie
+        y += 5;
+        doc.text('Zwischensumme (ohne MwSt.):', 140, y, { align: 'right' });
+        doc.text(`${totalWithoutVAT.toFixed(2)} €`, 170, y, { align: 'right' });
+
+        // Zuschläge
+        if (surchargeCheckbox.checked) {
+            const surcharge = totalWithoutVAT * 0.1;
+            totalWithoutVAT += surcharge;
+            y += 10;
+            doc.text('Zuschläge / Verschnitt (10%):', 140, y, { align: 'right' });
+            doc.text(`${surcharge.toFixed(2)} €`, 170, y, { align: 'right' });
+        }
+
+        // Mehrwertsteuer
+        let totalWithVAT = totalWithoutVAT;
+        if (vatCheckbox.checked) {
+            const vat = totalWithoutVAT * 0.19;
+            totalWithVAT += vat;
+            y += 10;
+            doc.text('MwSt. (19%):', 140, y, { align: 'right' });
+            doc.text(`${vat.toFixed(2)} €`, 170, y, { align: 'right' });
+        }
+
+        // Gesamtkosten mit MwSt.
+        y += 10;
+        doc.text('Gesamtkosten (inkl. MwSt.):', 140, y, { align: 'right' });
+        doc.text(`${totalWithVAT.toFixed(2)} €`, 170, y, { align: 'right' });
+
+        // Freundlicher Hinweis unter der Tabelle
+        y += 20;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.text('Vielen Dank für Ihr Interesse an unserem Angebot.', 10, y);
+        doc.text('Wir stehen Ihnen gerne für Rückfragen zur Verfügung.', 10, y + 10);
+        doc.text('Mit Freundlichen Grüßen', 10, y + 25);
+        doc.text(`${companyName || 'N/A'}`, 10, y + 35);
+
+        // Fußzeile
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(8);
+        doc.text('Generiert mit ConMetCalc | www.conmetcalc.de', 10, 280);
+
+        // PDF speichern
+        doc.save(`${offerTitle || 'Angebot'}.pdf`);
+    });
+        </script>
+</body>
+</html>
