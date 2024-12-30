@@ -22,33 +22,38 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
 
     <!-- Navbar -->
     <nav class="bg-blue-500 text-white py-4">
         <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
             <a href="/" class="text-lg font-bold">ConMetCalc</a>
-            <div class="space-x-4">
+            <button id="mobile-menu-button" class="sm:hidden block text-white focus:outline-none">
+                ☰
+            </button>
+            <div id="menu" class="hidden sm:flex space-x-4">
                 <a href="/" class="hover:underline">Startseite</a>
+                <a href="/kalkulation.html" class="hover:underline">Kalkulation</a>
                 <a href="/kontakt.html" class="hover:underline">Kontakt</a>
-                <a href="/standard.html" class="hover:underline">Standard</a>
-                <a href="/individuell.html" class="hover:underline">Individuell</a>
             </div>
         </div>
     </nav>
 
     <!-- Danke-Nachricht -->
-    <header class="bg-gray-100 py-16">
-        <div class="container mx-auto px-4 sm:px-6 text-center">
+    <main class="flex-grow flex items-center justify-center">
+        <header class="bg-gray-100 p-8 rounded shadow text-center max-w-2xl">
             <h1 class="text-3xl sm:text-4xl font-bold text-blue-500">Vielen Dank für Ihre Nachricht!</h1>
             <p class="mt-4 text-lg sm:text-xl text-gray-700">Wir haben Ihre Anfrage erhalten und melden uns so schnell wie möglich bei Ihnen.</p>
-            <p class="mt-2 text-md sm:text-lg text-gray-600">Falls Sie dringende Fragen haben, erreichen Sie uns unter <a href="mailto:info@conmetcalc.de" class="text-blue-500 hover:underline">info@conmetcalc.de</a>.</p>
+            <p class="mt-2 text-md sm:text-lg text-gray-600">
+                Falls Sie dringende Fragen haben, erreichen Sie uns unter
+                <a href="mailto:info@conmetcalc.de" class="text-blue-500 hover:underline">info@conmetcalc.de</a>.
+            </p>
             <div class="mt-6">
-                <a href="/" class="button">Zurück zur Startseite</a>
+                <a href="/" class="button focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Zurück zur Startseite</a>
             </div>
-        </div>
-    </header>
-
+        </header>
+    </main>
+    
     <!-- Footer -->
     <footer class="bg-blue-500 text-white py-4">
         <div class="container mx-auto px-4 sm:px-6 text-center">
@@ -56,5 +61,16 @@
         </div>
     </footer>
 
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            const menu = document.getElementById('menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
