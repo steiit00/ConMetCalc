@@ -10,13 +10,48 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        @media (max-width: 640px) {
-            nav {
-                flex-wrap: wrap;
-            }
+        /* Standard-Styles */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        /* Menü für mobile Geräte */
+        #menu {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Menü-Inhalte linksbündig ausrichten */
+            padding: 0.5rem 0;
+        }
+        
+        #menu a {
+            display: block;
+            padding: 0.5rem 1rem; /* Abstände für besseres Layout */
+            width: 100%; /* Die gesamte Breite nutzen */
+            text-align: left;
+        }
+        
+        /* Hamburger-Menü-Button */
+        #menu-toggle {
+            display: block; /* Immer anzeigen */
+        }
+        
+        @media (min-width: 640px) {
             #menu {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex; /* Standardmäßige horizontale Ansicht */
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+            }
+            #menu a {
+                padding: 0; /* Entferne zusätzliche Abstände für Desktop */
+                width: auto;
+                text-align: center;
+            }
+            #menu-toggle {
+                display: none; /* Hamburger-Menü-Button ausblenden */
             }
         }
 
@@ -41,17 +76,19 @@
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-
     <nav class="gradient-bg text-white py-4 shadow-md">
-        <div class="container mx-auto px-4 sm:px-6 flex items-center justify-between">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <!-- Logo -->
             <a href="/" class="text-2xl font-bold" style="font-family: 'Poppins', sans-serif;">
                 ConMetCalc.
             </a>
+            <!-- Hamburger-Menü-Button -->
             <button id="menu-toggle" class="sm:hidden text-white focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
+            <!-- Navigation Links -->
             <div id="menu" class="hidden sm:flex space-x-5 text-lg" style="font-family: 'Poppins', sans-serif;">
                 <a href="#features" class="hover:underline">Vorteile</a>
                 <a href="/kalkulation" class="hover:underline">Kalkulation</a>
@@ -59,7 +96,6 @@
             </div>
         </div>
     </nav>
-   
     <!-- Header / Hero Section -->
     <header class="gradient-bg text-white">
         <div class="container mx-auto px-4 sm:px-6 py-16 text-center">
