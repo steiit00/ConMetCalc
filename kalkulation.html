@@ -11,15 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <style>
-        @media (max-width: 640px) {
-            nav {
-                flex-wrap: wrap;
-            }
-            #menu {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
         body {
             font-family: 'Poppins', sans-serif;
         }
@@ -77,17 +68,11 @@
     <!-- Navbar -->
     <nav class="gradient-bg text-white py-4 shadow-md">
         <div class="container mx-auto px-4 sm:px-6 flex items-center justify-between">
-            <a href="/" class="text-2xl font-bold" style="font-family: 'Poppins', sans-serif;">
+            <a href="/" class="text-2xl font-bold">
                 ConMetCalc.
             </a>
-            <button id="menu-toggle" class="sm:hidden text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
-            <div id="menu" class="hidden sm:flex space-x-5 text-lg" style="font-family: 'Poppins', sans-serif;">
-                <a href="#features" class="hover:underline">Vorteile</a>
-                <a href="/kalkulation" class="hover:underline">Kalkulation</a>
+            <div class="space-x-8 text-lg">
+                <a href="/" class="hover:underline">Startseite</a>
                 <a href="/kontakt" class="hover:underline">Kontakt</a>
             </div>
         </div>
@@ -160,7 +145,7 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Kontakt</h3>
                     <p>Email: <a href="mailto:info@conmetcalc.de" class="hover:underline">info@conmetcalc.de</a></p>
-                    
+
                 </div>
             </div>
             <div class="mt-6 text-center border-t border-blue-400 pt-4">
@@ -170,12 +155,6 @@
     </footer>
     <!-- JavaScript -->
     <script>
-        const menuToggle = document.getElementById("menu-toggle");
-        const menu = document.getElementById("menu");
-    
-        menuToggle.addEventListener("click", () => {
-            menu.classList.toggle("hidden");
-        });
         const maxMaterials = 5;
         const materialFields = document.getElementById('material-fields');
         const addMaterialBtn = document.getElementById('add-material-btn');
@@ -370,4 +349,3 @@
     });
         </script>
 </body>
-</html>
