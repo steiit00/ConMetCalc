@@ -3,13 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kontaktieren Sie ConMetCalc für Standard- und anpassbare Softwarelösungen für Materialkalkulation und Angebotserstellung.">
-    <meta name="keywords" content="Kontakt, ConMetCalc, Angebotserstellung, Materialkalkulation, Softwareanpassung">
+    <meta name="description" content="Kontaktieren Sie ConMetCalc für Standard- und anpassbare Softwarelösungen für Auftragskalkulation und Angebotserstellung.">
+    <meta name="keywords" content="Kontakt, ConMetCalc, Angebotserstellung, Auftragskalkulation, Softwareanpassung">
     <meta name="author" content="Stefan Eisele">
     <title>Kontakt - ConMetCalc</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Styling für Buttons und Inputs */
+        .text-primary {
+            color: #2563eb;
+        }
+        .bg-primary {
+            background-color: #2563eb;
+        }
+        .hover-bg-primary:hover {
+            background-color: #1d4ed8;
+        }
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gradient-bg {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 1) 0%, rgba(37, 99, 235, 1) 100%);
+        }
+        .rounded-button {
+            border-radius: 9999px;
+        }
         .form-input {
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -40,22 +58,24 @@
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Navbar -->
-    <nav class="bg-blue-500 text-white py-4">
-        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
-            <a href="/" class="text-lg font-bold">ConMetCalc</a>
-            <div class="space-x-4">
+    <nav class="gradient-bg text-white py-4 shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold" style="font-family: 'Poppins', sans-serif;">
+                ConMetCalc.
+            </a>
+            <div class="space-x-8 text-lg" style="font-family: 'Poppins', sans-serif;">
                 <a href="/" class="hover:underline">Startseite</a>
-                <a href="/kalkulation.html" class="hover:underline">Kalkulation</a>
-                <a href="/kontakt.html" class="hover:underline">Kontakt</a>
+                <a href="/kalkulation" class="hover:underline">Kalkulation</a>
+                <a href="/kontakt" class="hover:underline">Kontakt</a>
             </div>
         </div>
     </nav>
 
     <!-- Kontakt Header -->
-    <header class="bg-gray-100 py-12">
+    <header class="gradient-bg text-white py-16">
         <div class="container mx-auto px-4 sm:px-6 text-center">
-            <h1 class="text-3xl sm:text-4xl font-bold text-blue-500">Kontaktieren Sie uns</h1>
-            <p class="mt-4 text-lg sm:text-xl text-gray-700">Haben Sie Fragen zur Standardsoftware oder benötigen Sie eine maßgeschneiderte Lösung? Wir freuen uns auf Ihre Nachricht!</p>
+            <h1 class="text-3xl sm:text-4xl font-bold">Kontaktieren Sie uns</h1>
+            <p class="mt-4 text-lg sm:text-xl">Haben Sie Fragen zur Standardsoftware oder benötigen Sie eine maßgeschneiderte Lösung? Wir freuen uns auf Ihre Nachricht!</p>
         </div>
     </header>
 
@@ -73,27 +93,27 @@
         </div>
     </section>
 
-    <!-- Software-Angebote -->
-    <section class="bg-gray-50 py-16">
-        <div class="container mx-auto px-4 sm:px-6 text-center">
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Unsere Softwarelösungen</h2>
-            <p class="mt-4 text-sm sm:text-base text-gray-600">Egal ob Standardsoftware oder individuell anpassbare Lösungen – ConMetCalc bietet Ihnen die Flexibilität, die Sie benötigen.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
-                <!-- Standardsoftware -->
-                <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                    <h3 class="text-xl font-bold text-blue-500">Standardsoftware</h3>
-                    <p class="mt-4 text-sm sm:text-base text-gray-600">Ideal für Handwerksbetriebe, die eine einfache und effiziente Lösung für Materialkalkulation und Angebotserstellung benötigen.</p>
-                    <a href="/standard.html" class="form-button mt-4 inline-block">Mehr erfahren</a>
-                </div>
-                <!-- Individuelle Anpassung -->
-                <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                    <h3 class="text-xl font-bold text-blue-500">Individuelle Anpassung</h3>
-                    <p class="mt-4 text-sm sm:text-base text-gray-600">Maßgeschneiderte Funktionen, perfekt abgestimmt auf die Bedürfnisse Ihres Betriebs. Flexibel und skalierbar.</p>
-                    <a href="/individuell.html" class="form-button mt-4 inline-block">Mehr erfahren</a>
+        <!-- Software-Angebote -->
+        <section class="bg-gray-50 py-16">
+            <div class="container mx-auto px-4 sm:px-6 text-center">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Unsere Softwarelösungen</h2>
+                <p class="mt-4 text-sm sm:text-base text-gray-600">Egal ob Standardsoftware oder individuell anpassbare Lösungen – ConMetCalc bietet Ihnen die Flexibilität, die Sie benötigen.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
+                    <!-- Standardsoftware -->
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-xl font-bold text-blue-500">Standardsoftware</h3>
+                        <p class="mt-4 text-sm sm:text-base text-gray-600">Ideal für Handwerksbetriebe, die eine einfache und effiziente Lösung für Materialkalkulation und Angebotserstellung benötigen.</p>
+                        <a href="/standard.html" class="form-button mt-4 inline-block">Mehr erfahren</a>
+                    </div>
+                    <!-- Individuelle Anpassung -->
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-xl font-bold text-blue-500">Individuelle Anpassung</h3>
+                        <p class="mt-4 text-sm sm:text-base text-gray-600">Maßgeschneiderte Funktionen, perfekt abgestimmt auf die Bedürfnisse Ihres Betriebs. Flexibel und skalierbar.</p>
+                        <a href="/individuell.html" class="form-button mt-4 inline-block">Mehr erfahren</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     <!-- Footer -->
     <footer class="gradient-bg text-white py-8">
@@ -109,6 +129,7 @@
                     <h3 class="text-lg font-bold mb-4">Navigation</h3>
                     <ul class="space-y-2">
                         <li><a href="/impressum" class="hover:underline">Impressum</a></li>
+                        <li><a href="/datenschutz" class="hover:underline">Datenschutz</a></li>
                         <li><a href="/" class="hover:underline">Startseite</a></li>
                     </ul>
                 </div>
