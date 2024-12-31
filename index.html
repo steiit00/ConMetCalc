@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ConMetCalc - Kalkulations-Software mit anpassbarer Datenbank, Standard-Templates und direkter Angebots- und Rechnungserstellung.">
-    <meta name="keywords" content="Kalkulation, Handwerk, Schlosserei, Metallbetriebe, Kalkulationssoftware, Angebotserstellung, individuelle Lösungen, Effizienz, Kostenmanagement">
+    <meta name="description" content="ConMetCalc - Ihre umfassende Auftragskalkulations-Software: Flexibel, effizient und perfekt für Handwerksbetriebe.">
+    <meta name="keywords" content="Auftragskalkulation, Kostenmanagement, Handwerk, Schlosserei, Metallbetriebe, Kalkulationssoftware, Angebotserstellung, Effizienz">
     <meta name="author" content="Stefan Eisele">
     <title>ConMetCalc - Kalkulations-Software</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* Animationen */
         .hover-scale {
@@ -31,22 +32,24 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Navbar -->
     <nav class="gradient-bg text-white py-4 shadow-md">
-        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
-            <a href="/" class="text-lg font-bold">ConMetCalc</a>
-            <div class="space-x-4">
+        <div class="container mx-auto px-4 sm:px-6 flex items-center justify-between">
+            <!-- Titel in neuer Schriftart -->
+            <a href="/" class="text-2xl font-bold" style="font-family: 'Poppins', sans-serif;">
+                ConMetCalc.
+            </a>
+            <!-- Navigation Links -->
+            <div class="space-x-8 text-lg" style="font-family: 'Poppins', sans-serif;">
                 <a href="#features" class="hover:underline">Vorteile</a>
                 <a href="/kalkulation" class="hover:underline">Kalkulation</a>
                 <a href="/kontakt" class="hover:underline">Kontakt</a>
             </div>
         </div>
-    </nav>
+    </nav>    
 
     <!-- Header / Hero Section -->
     <header class="gradient-bg text-white">
         <div class="container mx-auto px-4 sm:px-6 py-16 text-center">
-            <h1 class="text-4xl sm:text-5xl font-bold">ConMetCalc</h1>
             <p class="mt-4 text-lg sm:text-xl">Die unkomplizierte Kalkulations-Software für Handwerksbetriebe.</p>
             <p class="mt-2 text-md sm:text-lg">Effizient, flexibel und verlässlich – für die komplette Kalkulation Ihrer Aufträge.</p>
             <div class="mt-6">
@@ -60,24 +63,24 @@
     <!-- Vorteile Section -->
     <section id="features" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">Warum ConMetCalc?</h2>
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">Warum ConMetCalc für Ihre Auftragskalkulation?</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
                 <div class="bg-white p-6 rounded-lg shadow-md text-center hover-scale">
-                    <img src="icons/datenbank.png" alt="Eigene Datenbank" class="mx-auto w-16 mb-4">
+                    <img src="icons/datenbank.png" alt="Flexible Datenbank für Ihre Auftragskalkulation" loading="lazy" class="mx-auto w-16 mb-4">
                     <h3 class="text-xl font-semibold text-blue-500">Eigene Datenbank</h3>
                     <p class="mt-2 text-sm sm:text-base">
-                        Verwalten Sie Materialpreise, Mitarbeiter- und Maschinenkosten, Beschichtungen und Fixkosten – flexibel und präzise anpassbar.
+                        Verwalten Sie Materialpreise, Maschinenkosten, Beschichtungen und Fixkosten – flexibel und präzise anpassbar.
                     </p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md text-center hover-scale">
-                    <img src="icons/blau.png" alt="Templates" class="mx-auto w-16 mb-4">
+                    <img src="icons/blau.png" alt="Standardisierte Templates für effiziente Angebote" loading="lazy" class="mx-auto w-16 mb-4">
                     <h3 class="text-xl font-semibold text-blue-500">Templates für Standardteile</h3>
                     <p class="mt-2 text-sm sm:text-base">
                         Erstellen und speichern Sie Standardangebote. Passen Sie diese für jedes Projekt an und sparen Sie so wertvolle Zeit.
                     </p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md text-center hover-scale">
-                    <img src="icons/rechnung.png" alt="Rechnungsstellung" class="mx-auto w-16 mb-4">
+                    <img src="icons/rechnung.png" alt="Direkte Angebots- und Rechnungserstellung" loading="lazy" class="mx-auto w-16 mb-4">
                     <h3 class="text-xl font-semibold text-blue-500">Angebots- und Rechnungserstellung</h3>
                     <p class="mt-2 text-sm sm:text-base">
                         Generieren Sie Angebote und Rechnungen mit Ihrem individuellen Briefkopf. Zuschläge, Rabatte und Mehrwertsteuer sind verlässlich berechnet.
@@ -95,7 +98,7 @@
                 <div class="bg-white p-6 rounded-lg shadow-md hover-scale text-center">
                     <h3 class="text-xl font-bold text-blue-500">Standardsoftware</h3>
                     <p class="mt-4">Die ideale Lösung für einfache und effiziente Materialkalkulation.</p>
-                    <a href="/standard" class="mt-4 inline-block bg-blue-500 text-white px-6 py-3 rounded-button font-semibold hover:bg-blue-600">Mehr erfahren</a>
+                    <a href="/standardsoftware" class="mt-4 inline-block bg-blue-500 text-white px-6 py-3 rounded-button font-semibold hover:bg-blue-600">Mehr erfahren</a>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md hover-scale text-center">
                     <h3 class="text-xl font-bold text-blue-500">Individuelle Lösungen</h3>
@@ -115,14 +118,35 @@
                 Zur Demo
             </a>
         </div>
-    </section>
+    </section>    
 
     <!-- Footer -->
-    <footer class="gradient-bg text-white py-4">
-        <div class="container mx-auto px-4 sm:px-6 text-center">
-            <p>&copy; 2024 ConMetCalc. Alle Rechte vorbehalten.</p>
+    <footer class="gradient-bg text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
+                <div>
+                    <a href="/" class="text-2xl font-bold" style="font-family: 'Poppins', sans-serif;">
+                        ConMetCalc.
+                    </a>
+                    <p>Effiziente Auftragskalkulationslösung für Handwerksbetriebe.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/datenschutz" class="hover:underline">Datenschutz</a></li>
+                        <li><a href="/impressum" class="hover:underline">Impressum</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Kontakt</h3>
+                    <p>Email: <a href="mailto:info@conmetcalc.de" class="hover:underline">info@conmetcalc.de</a></p>
+                    
+                </div>
+            </div>
+            <div class="mt-6 text-center border-t border-blue-400 pt-4">
+                <p>&copy; 2024 ConMetCalc. Alle Rechte vorbehalten.</p>
+            </div>
         </div>
     </footer>
-
 </body>
 </html>
