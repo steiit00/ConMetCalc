@@ -73,14 +73,6 @@
         }
     </style>
 </head>
-<script>
-    const menuToggle = document.getElementById("menu-toggle");
-    const menu = document.getElementById("menu");
-
-    menuToggle.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-    });
-</script>
 <body class="bg-gray-50 text-gray-800">
     <!-- Navbar -->
     <nav class="gradient-bg text-white py-4 shadow-md">
@@ -178,6 +170,12 @@
     </footer>
     <!-- JavaScript -->
     <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const menu = document.getElementById("menu");
+    
+        menuToggle.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
         const maxMaterials = 5;
         const materialFields = document.getElementById('material-fields');
         const addMaterialBtn = document.getElementById('add-material-btn');
