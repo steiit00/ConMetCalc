@@ -173,8 +173,9 @@
 
             <!-- Buttons -->
             <div class="flex flex-col sm:flex-row sm:justify-between mt-8">
+                <button type="button" id="example-data-btn" class="btn mb-4 sm:mb-0 sm:mr-2">Beispieldaten einfügen</button>
                 <button type="button" id="generate-pdf-btn" class="btn mb-4 sm:mb-0 sm:mr-2">PDF generieren</button>
-                <a href="/kontakt" class="btn sm:ml-2">Kontakt aufnehmen</a>
+                <a href="/kontakt/index.html" class="btn sm:ml-2">Kontakt aufnehmen</a>
             </div>
         </form>
     </main>
@@ -192,8 +193,8 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Navigation</h3>
                     <ul class="space-y-2">
-                        <li><a href="/datenschutz" class="hover:underline">Datenschutz</a></li>
-                        <li><a href="/impressum" class="hover:underline">Impressum</a></li>
+                        <li><a href="/datenschutz/index.html" class="hover:underline">Datenschutz</a></li>
+                        <li><a href="/impressum/index.html" class="hover:underline">Impressum</a></li>
                     </ul>
                 </div>
                 <div>
@@ -223,6 +224,47 @@
             event.preventDefault();
             event.returnValue = ''; // Standard-Wert für moderne Browser
         });
+
+        document.getElementById("example-data-btn").addEventListener("click", () => {
+        // Beispieldaten für Felder einfügen
+        document.getElementById("offer-title").value = "Angebot für Metallverarbeitung";
+        document.getElementById("customer-name").value = "Max Mustermann";
+        document.getElementById("company-name").value = "Musterfirma GmbH";
+
+        // Materialfelder mit Beispieldaten füllen
+        const exampleMaterials = [
+            { name: "Stahlträger", amount: 5, price: 200 },
+            { name: "Aluminiumblech", amount: 10, price: 50 },
+            { name: "Schrauben", amount: 100, price: 0.1 },
+        ];
+
+        // Vorhandene Materialfelder zurücksetzen
+        materialFields.innerHTML = "";
+        materialCount = 0;
+
+        // Beispieldaten hinzufügen
+        exampleMaterials.forEach((material) => {
+            if (materialCount < maxMaterials) {
+                materialCount++;
+                const materialDiv = document.createElement("div");
+                materialDiv.innerHTML = `
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <input type="text" class="form-input material-name" value="${material.name}" placeholder="Materialname" />
+                        <input type="number" class="form-input material-amount" value="${material.amount}" placeholder="Menge" />
+                        <input type="number" class="form-input material-price" value="${material.price}" placeholder="Preis pro Einheit" />
+                    </div>`;
+                materialFields.appendChild(materialDiv);
+
+                // Event-Listener für neue Felder hinzufügen
+                materialDiv.querySelectorAll(".form-input").forEach((input) => {
+                    input.addEventListener("input", updateTotalCost);
+                });
+            }
+        });
+
+        // Berechnung der Gesamtkosten
+        updateTotalCost();
+    });
 
 
         // Funktion, um Materialfelder hinzuzufügen
