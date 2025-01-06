@@ -8,9 +8,58 @@
     <meta name="author" content="Stefan Eisele">
     <title>Materialkalkulation Demo | ConMetCalc</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+
+            /* Mobile Menü-Styling */
+        #menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: rgba(37, 100, 235, 1); /* Nur in der mobilen Ansicht */
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 1rem;
+            z-index: 1000;
+            border-bottom-left-radius: 0.7rem; /* Runde Ecke unten links */
+        }
+
+        #menu a {
+            display: block;
+            text-align: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.2rem;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Dezente Trennlinie */
+        }
+
+        #menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Desktop Menü-Styling */
+        @media (min-width: 640px) {
+            #menu {
+                display: flex;
+                position: static; /* Standard für Desktop */
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+                background-color: transparent; /* Kein Hintergrund */
+                border-bottom-left-radius: 0; /* Runde Ecke entfernen */
+                padding: 0; /* Kein Padding */
+            }
+
+            #menu a {
+                padding: 0; /* Kein Padding für Links */
+                text-align: center;
+                border-bottom: none; /* Keine Trennlinien */
+            }
+        }
         body {
             font-family: 'Poppins', sans-serif;
         }
@@ -66,15 +115,20 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
     <!-- Navbar -->
-    <nav class="gradient-bg text-white py-4 shadow-md">
+    <nav class="gradient-bg text-white py-4 shadow-md relative">
         <div class="container mx-auto px-4 sm:px-6 flex items-center justify-between">
-            <a href="/" class="text-2xl font-bold">
+            <a href="/" class="text-2xl font-bold" style="font-family: 'Poppins', sans-serif;">
                 ConMetCalc.
             </a>
-            <div class="space-x-8 text-lg">
+            <button id="menu-toggle" class="sm:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <div id="menu" class="sm:flex">
                 <a href="/" class="hover:underline">Startseite</a>
                 <a href="/kontakt" class="hover:underline">Kontakt</a>
-            </div>
+            </div>                         
         </div>
     </nav>
 
@@ -82,7 +136,7 @@
     <main class="container mx-auto px-4 sm:px-6 py-16">
         <h1 class="text-3xl sm:text-4xl font-bold text-center mb-8 text-primary">Materialkalkulation Demo</h1>
         <p class="text-center text-lg text-gray-700 mb-8">
-            <strong>Dies ist eine Demo-Version unserer Software.</strong> Für mehr Informationen, <a a href="/standard" class="text-primary hover:underline">klicken Sie hier</a>.
+            <strong>Dies ist eine Demo-Version unserer Software.</strong> Für mehr Informationen, <a a href="/standard/index.html" class="text-primary hover:underline">klicken Sie hier</a>.
         </p>
         <p class="text-center text-lg text-gray-700 mb-8">
             Alle Eingaben sind in der Vollversion anpassbar und können in der Datenbank gespeichert werden, was Ihnen Zeit spart. Das generierte Angebots-PDF ist eine Vorlage und dient der Demonstration.
@@ -120,7 +174,7 @@
             <!-- Buttons -->
             <div class="flex flex-col sm:flex-row sm:justify-between mt-8">
                 <button type="button" id="generate-pdf-btn" class="btn mb-4 sm:mb-0 sm:mr-2">PDF generieren</button>
-                <a href="/kontakt" class="btn sm:ml-2">Kontakt aufnehmen</a>
+                <a href="/kontakt/index.html" class="btn sm:ml-2">Kontakt aufnehmen</a>
             </div>
         </form>
     </main>
@@ -138,14 +192,14 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Navigation</h3>
                     <ul class="space-y-2">
-                        <li><a href="/datenschutz" class="hover:underline">Datenschutz</a></li>
-                        <li><a href="/impressum" class="hover:underline">Impressum</a></li>
+                        <li><a href="/datenschutz/index.html" class="hover:underline">Datenschutz</a></li>
+                        <li><a href="/impressum/index.html" class="hover:underline">Impressum</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-bold mb-4">Kontakt</h3>
                     <p>Email: <a href="mailto:info@conmetcalc.de" class="hover:underline">info@conmetcalc.de</a></p>
-
+                    
                 </div>
             </div>
             <div class="mt-6 text-center border-t border-blue-400 pt-4">
@@ -240,6 +294,35 @@
         // Event-Listener für bestehende Eingabefelder
         document.querySelectorAll('.form-input').forEach(input => {
             input.addEventListener('input', updateTotalCost);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+        const menuToggle = document.getElementById("menu-toggle");
+        const menu = document.getElementById("menu");
+
+        // Funktion, um die Anzeige des Menüs basierend auf der Bildschirmbreite zu aktualisieren
+        const updateMenuDisplay = () => {
+            if (window.innerWidth >= 640) {
+                menu.style.display = "flex"; // Immer sichtbar in der Desktop-Ansicht
+            } else {
+                menu.style.display = "none"; // Standardmäßig ausgeblendet in der mobilen Ansicht
+            }
+        };
+
+        // Initiale Anzeige aktualisieren
+        updateMenuDisplay();
+
+        // Event-Listener für das Hamburger-Menü
+        menuToggle.addEventListener("click", () => {
+            if (menu.style.display === "none") {
+                menu.style.display = "flex"; // Menü anzeigen
+            } else {
+                menu.style.display = "none"; // Menü ausblenden
+            }
+        });
+
+        // Bildschirmgröße beobachten und Anzeige aktualisieren
+        window.addEventListener("resize", updateMenuDisplay);
         });
 
         document.getElementById('generate-pdf-btn').addEventListener('click', () => {
@@ -346,6 +429,7 @@
 
         // PDF speichern
         doc.save(`${offerTitle || 'Angebot'}.pdf`);
-    });
+        });
         </script>
 </body>
+</html>
