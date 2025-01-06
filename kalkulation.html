@@ -396,16 +396,20 @@
         const companyName = document.getElementById('company-name').value.trim();
         const creationDate = new Date().toLocaleDateString('de-DE');
 
+        let validMaterialFound = false; // Variable, um zu prüfen, ob ein Material existiert
+
         // PDF Header
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(18);
-        doc.text(offerTitle || 'Angebot', 105, 20, { align: 'center' });
+        doc.text(offerTitle || '', 105, 20, { align: 'center' });
 
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(12);
-        doc.text(`Firma: ${companyName || 'N/A'}`, 10, 40);
-        doc.text(`Kunde: ${customerName || 'N/A'}`, 10, 45);
+        if (companyName) doc.text(`Firma: ${companyName}`, 10, 40);
+        if (customerName) doc.text(`Kunde: ${customerName}`, 10, 45);
         doc.text(`Datum: ${creationDate}`, 10, 50);
+
+        // Angebot & Kundennummer immer anzeigen
         doc.text('Angebotsnummer: 760022', 150, 40);
         doc.text('Kundennummer: 004354', 150, 45);
 
@@ -424,24 +428,33 @@
 
         // Tabelleninhalte
         materialFields.querySelectorAll('.grid').forEach((row, index) => {
-            if (index < 5) { // Maximal 5 Positionen
-                const inputs = row.querySelectorAll('.form-input');
-                const name = inputs[0].value.trim();
-                const amount = parseFloat(inputs[1].value) || 0;
-                const price = parseFloat(inputs[2].value) || 0;
-                const cost = amount * price;
+            const inputs = row.querySelectorAll('.form-input');
+            const name = inputs[0].value.trim();
+            const amount = parseFloat(inputs[1].value) || 0;
+            const price = parseFloat(inputs[2].value) || 0;
 
-                totalWithoutVAT += cost;
+            // Leere Zeilen überspringen
+            if (!name || amount === 0 || price === 0) return;
 
-                doc.setFont('helvetica', 'normal');
-                doc.text((index + 1).toString(), 10, y);
-                doc.text(name || 'N/A', 20, y);
-                doc.text(amount.toString(), 120, y, { align: 'right' });
-                doc.text(price.toFixed(2), 140, y, { align: 'right' });
-                doc.text(cost.toFixed(2), 170, y, { align: 'right' });
-                y += 10;
-            }
+            validMaterialFound = true; // Gültiges Material gefunden
+
+            const cost = amount * price;
+            totalWithoutVAT += cost;
+
+            doc.setFont('helvetica', 'normal');
+            doc.text((index + 1).toString(), 10, y);
+            doc.text(name, 20, y);
+            doc.text(amount.toString(), 120, y, { align: 'right' });
+            doc.text(price.toFixed(2), 140, y, { align: 'right' });
+            doc.text(cost.toFixed(2), 170, y, { align: 'right' });
+            y += 10;
         });
+
+        // Prüfen, ob mindestens ein Material vorhanden ist
+        if (!validMaterialFound) {
+            alert('Es muss mindestens ein gültiges Material angegeben werden, um ein PDF zu generieren.');
+            return; // PDF-Generierung abbrechen
+        }
 
         // Zwischensumme ohne MwSt.
         doc.setFont('helvetica', 'bold');
@@ -480,8 +493,7 @@
         doc.setFontSize(10);
         doc.text('Vielen Dank für Ihr Interesse an unserem Angebot.', 10, y);
         doc.text('Wir stehen Ihnen gerne für Rückfragen zur Verfügung.', 10, y + 10);
-        doc.text('Mit Freundlichen Grüßen', 10, y + 25);
-        doc.text(`${companyName || 'N/A'}`, 10, y + 35);
+        if (companyName) doc.text(`Mit freundlichen Grüßen\n${companyName}`, 10, y + 25);
 
         // Fußzeile
         doc.setFont('helvetica', 'italic');
@@ -490,11 +502,11 @@
 
         // PDF speichern
         doc.save(`${offerTitle || 'Angebot'}.pdf`);
-        });
-        document.getElementById('reset-btn').addEventListener('click', () => {
-            location.reload(); // Lädt die Seite neu
-        });
+    });
 
-        </script>
+    document.getElementById('reset-btn').addEventListener('click', () => {
+        location.reload(); // Lädt die Seite neu
+    });
+    </script>
 </body>
 </html>
