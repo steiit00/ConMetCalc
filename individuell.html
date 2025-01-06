@@ -9,6 +9,54 @@
     <title>Individuelle Lösungen - ConMetCalc</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
+        /* Mobile Menü-Styling */
+        #menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: rgba(37, 100, 235, 1); /* Nur in der mobilen Ansicht */
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 1rem;
+            z-index: 1000;
+            border-bottom-left-radius: 0.7rem; /* Runde Ecke unten links */
+        }
+
+        #menu a {
+            display: block;
+            text-align: left;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.2rem;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Dezente Trennlinie */
+        }
+
+        #menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Desktop Menü-Styling */
+        @media (min-width: 640px) {
+            #menu {
+                display: flex;
+                position: static; /* Standard für Desktop */
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+                background-color: transparent; /* Kein Hintergrund */
+                border-bottom-left-radius: 0; /* Runde Ecke entfernen */
+                padding: 0; /* Kein Padding */
+            }
+
+            #menu a {
+                padding: 0; /* Kein Padding für Links */
+                text-align: center;
+                border-bottom: none; /* Keine Trennlinien */
+            }
+        }
         /* Einheitliches Styling für Vorteile */
         .feature-card {
             background-color: #f8f9fc;
@@ -40,21 +88,46 @@
             height: 60px;
             margin: 0 auto 15px auto;
         }
+        /* Animationen */
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Abgerundete Buttons */
+        .rounded-button {
+            border-radius: 9999px;
+        }
+
+        /* Farbverlauf */
+        .gradient-bg {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 1) 0%, rgba(37, 99, 235, 1) 100%);
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Navbar -->
-    <nav class="bg-blue-500 text-white py-4">
-        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
-            <a href="/" class="text-lg font-bold">ConMetCalc</a>
-            <div class="space-x-4">
-                <a href="/" class="hover:underline">Startseite</a>
+    <nav class="gradient-bg text-white py-4 shadow-md relative">
+        <div class="container mx-auto px-4 sm:px-6 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold" style="font-family: 'Poppins', sans-serif;">
+                ConMetCalc.
+            </a>
+            <button id="menu-toggle" class="sm:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <div id="menu" class="sm:flex">
+                <a href="/standard/" class="hover:underline">Standard</a>
+                <a href="/kalkulation" class="hover:underline">Kalkulation</a>
                 <a href="/kontakt" class="hover:underline">Kontakt</a>
-                <a href="/standard" class="hover:underline">Standard</a>
-            </div>
+            </div>                         
         </div>
-    </nav>
+    </nav>  
 
     <!-- Header -->
     <header class="bg-gray-100 py-12">
@@ -98,12 +171,12 @@
         <div class="container mx-auto px-4 sm:px-6 text-center">
             <h2 class="text-2xl sm:text-3xl font-bold">Interesse an einer maßgeschneiderten Lösung?</h2>
             <p class="mt-4 text-sm sm:text-base text-gray-600">Lassen Sie uns gemeinsam die perfekte Lösung für Ihren Betrieb entwickeln.</p>
-            <a href="/kontakt" class="mt-6 bg-blue-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-600 inline-block">
+            <a href="/kontakt/index.html" class="mt-6 bg-blue-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-600 inline-block">
                 Jetzt Kontakt aufnehmen
             </a>
         </div>
     </section>
-    
+
     <!-- Footer -->
     <footer class="gradient-bg text-white py-8">
         <div class="container mx-auto px-4 sm:px-6">
@@ -117,13 +190,14 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Navigation</h3>
                     <ul class="space-y-2">
+                        <li><a href="/datenschutz" class="hover:underline">Datenschutz</a></li>
                         <li><a href="/impressum" class="hover:underline">Impressum</a></li>
-                        <li><a href="/" class="hover:underline">Startseite</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-bold mb-4">Kontakt</h3>
                     <p>Email: <a href="mailto:info@conmetcalc.de" class="hover:underline">info@conmetcalc.de</a></p>
+                    
                 </div>
             </div>
             <div class="mt-6 text-center border-t border-blue-400 pt-4">
@@ -132,4 +206,34 @@
         </div>
     </footer>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const menuToggle = document.getElementById("menu-toggle");
+        const menu = document.getElementById("menu");
+
+        // Funktion, um die Anzeige des Menüs basierend auf der Bildschirmbreite zu aktualisieren
+        const updateMenuDisplay = () => {
+            if (window.innerWidth >= 640) {
+                menu.style.display = "flex"; // Immer sichtbar in der Desktop-Ansicht
+            } else {
+                menu.style.display = "none"; // Standardmäßig ausgeblendet in der mobilen Ansicht
+            }
+        };
+
+        // Initiale Anzeige aktualisieren
+        updateMenuDisplay();
+
+        // Event-Listener für das Hamburger-Menü
+        menuToggle.addEventListener("click", () => {
+            if (menu.style.display === "none") {
+                menu.style.display = "flex"; // Menü anzeigen
+            } else {
+                menu.style.display = "none"; // Menü ausblenden
+            }
+        });
+
+        // Bildschirmgröße beobachten und Anzeige aktualisieren
+        window.addEventListener("resize", updateMenuDisplay);
+    });
+    </script>
 </html>
